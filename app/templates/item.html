@@ -1,0 +1,36 @@
+{% extends 'base_user.html' %}
+
+{% block title %} Post {% endblock %}
+
+
+{% block main %}
+<div class="container">
+
+    <!--This loops through the flash message -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{message}}
+            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+
+        
+            <div class="product-container">
+                <div class="product-card">
+                  <img src="product-1.jpg" alt="Product 1">
+                  <div class="product-info">
+                    <h3>{{item.name}}</h3>
+                    <p>{{item.size}}</p>
+                    <p class="price">{{item.price}}</p>
+                    <button>Add to Cart</button>
+                  </div>
+                </div>
+              </div>
+             
+            </div>
+
+
+
+
+{% endblock %}

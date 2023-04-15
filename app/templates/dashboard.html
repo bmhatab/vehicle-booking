@@ -1,0 +1,19 @@
+{% extends'homepage.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block main %}
+
+          <h1>Welcome to the dashboard!</h1>
+        </br></br>
+        <p>You are logged in!</p>
+        <strong>Name: </strong>{{current_user.name}}</br>
+        <strong>User ID: </strong>{{current_user.id}}</br>
+        <strong>Email: </strong>{{current_user.email}}</br>
+        <strong>Date Joined: </strong>{{current_user.date_added}}</br></br>           
+       <a class="btn btn-outline-secondary" href="{{url_for('main.update',id =current_user.id)}}">Edit Profile</a>
+       
+
+
+
+{% endblock %}

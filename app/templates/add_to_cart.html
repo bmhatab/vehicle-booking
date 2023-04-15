@@ -1,0 +1,43 @@
+{% extends 'homepage.html' %}
+
+{% block title %} Add to Cart {% endblock %}
+
+
+{% block main %}
+<div class="container">
+
+<!--This loops through the flash message -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{message}}
+            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+        <h1>Add Item </h1> 
+        <br/>
+        <div class="shadow p-3 mb-5 bg-body rounded">
+            <form method="POST" action="{{ url_for('main.add_to_cart',id = item.id) }}">
+                {{ form.csrf_token }}
+                {{ form.name.label(class="form-label") }}{{ form.name(class="form-control",value=item.name) }}
+                {{ form.quantity.label(class="form-label") }} {{ form.quantity(class="form-control",value=1) }}
+                {{ form.submit(class="btn btn-primary") }}
+            </form>
+        </div>
+    </div>
+
+   
+
+
+    
+    
+            
+            
+            
+        
+
+</div>
+
+
+
+{% endblock %}

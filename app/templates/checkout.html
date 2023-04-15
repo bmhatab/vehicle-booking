@@ -1,0 +1,40 @@
+{% extends 'homepage.html' %}
+
+{% block title %} Checkout {% endblock %}
+
+
+{% block main %}
+
+    <!--This loops through the flash message -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{message}}
+            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+    <div class="container">
+      <h3>Pay for order </h1> 
+        <div class="shadow p-3 mb-5 bg-body rounded">
+            <form method="post">
+                {{ form.hidden_tag() }} <!-- This creates our csrf token -->
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-control") }}
+                {{ form.phone.label(class="form-label") }}
+                {{ form.phone(class="form-control") }}
+                {{ form.address.label(class="form-label") }}
+                {{ form.address(class="form-control") }}
+                {{ form.room_number.label(class="form-label") }}
+                {{ form.room_number(class="form-control") }}
+                {{ form.student_id.label(class="form-label") }}
+                {{ form.student_id(class="form-control") }}
+                {{ form.submit(class="btn btn-primary") }}
+            </form>
+        </div>
+        <h1>Cart</h1>
+        <h3>Total Cost: ${{ total }}</h3>
+      </div>
+    </div>
+        
+
+{% endblock %}

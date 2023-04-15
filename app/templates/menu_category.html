@@ -1,0 +1,36 @@
+{% extends 'homepage.html' %}
+
+{% block title %} Items {% endblock %}
+
+{% block main %}
+<div class="container">
+
+    <!--This loops through the flash message -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{message}}
+            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+
+
+<h1>Product Packages</h1>
+
+
+<ul>
+    {% for item in items %}
+    <div class="menu-card">
+        <div class="category-name">{{item.name}}</div>
+        <div class="category-description">{{item.size}}<p>${{item.price}}</p></div>
+    </br></br></br></br>
+        <form method="POST">
+            <input type="hidden" name="item_name" value="{{item.name}}">
+            <input type="hidden" name="item_size" value="{{item.size}}">
+            <button type="submit" class="btn btn-outline-secondary"><a href="{{url_for('main.add_to_cart', id = item.id)}}">Add to Cart</a></button>
+        </form>
+    </div>
+    {% endfor %}
+</ul>
+
+{% endblock %}
