@@ -13,16 +13,13 @@
         </div>
     {% endfor %}
 
-s
-    <h1>Vehicle Types Available</h1>
-
-    {% for product in products %}
+    {% for vehicle in vehicles %}
 
     <div class="menu-card">
-        <div class="category-name">{{product.name}}</div>
-        <div class="category-description">{{product.category}}<p>{{product.description}}</p></div>
+        <div class="category-name">{{vehicle.name}}</div>
+        <div class="category-description">{{vehicle.category}}<p>{{vehicle.description}}</p></div>
      </br>
-     <a class="view-menu-btn" href="{{ url_for('main.menu_category_base', category=product.category) }}">View Items</a>  
+     <a class="view-menu-btn" href="{{ url_for('main.menu_category_base', category=vehicle.category) }}">View Items</a>  
     </div>
     
     {% endfor %}
