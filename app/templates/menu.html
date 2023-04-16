@@ -1,6 +1,6 @@
-{% extends 'homepage.html' %}
+{% extends 'base_home.html' %}
 
-{% block title %} Menu Items {% endblock %}
+{% block title %} Services {% endblock %}
 
 
 {% block main %}
@@ -13,16 +13,13 @@
         </div>
     {% endfor %}
 
-
-    <h1>Services Offered</h1>
-
-    {% for product in products %}
+    {% for vehicle in vehicles %}
 
     <div class="menu-card">
-        <div class="category-name">{{product.name}}</div>
-        <div class="category-description">{{product.category}}<p>{{product.description}}</p></div>
+        <div class="category-name">{{vehicle.name}}</div>
+        <div class="category-description">{{vehicle.category}}<p>{{vehicle.description}}</p></div>
      </br>
-        <a class="btn btn-outline-secondary" href="{{ url_for('main.menu_category', category=product.category) }}">View Items</a>
+     <a class="view-menu-btn" href="{{ url_for('main.items', category=vehicle.category) }}">View Items</a>  
     </div>
     
     {% endfor %}
