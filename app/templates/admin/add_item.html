@@ -1,6 +1,6 @@
 {% extends 'admin_index.html' %}
 
-{% block title %} Add Post {% endblock %}
+{% block title %} Add Vehicle {% endblock %}
 
 
 {% block main %}
@@ -14,15 +14,15 @@
         </div>
     {% endfor %}
 
-        <h1>Add Product </h1> 
+        <h1>Add Vehicle </h1> 
         <br/>
         <div class="shadow p-3 mb-5 bg-body rounded">
             <form method="post">
                 {{form.hidden_tag()}} <!--This creates our csrf token -->
                 {{form.name.label(class="form-label")}}
                 {{form.name(class="form-control")}}
-                {{form.size.label(class="form-label")}}
-                {{form.size(class="form-control")}}
+                {{form.description.label(class="form-label")}}
+                {{form.description(class="form-control")}}
                 {{form.price.label(class="form-label")}}
                 {{form.price(class="form-control", rows = "2")}}
                 {{form.category.label(class="form-label")}}

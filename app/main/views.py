@@ -1,7 +1,7 @@
 from datetime import datetime
 from app import db,login_manager
 from . import main
-from .forms import UserForm,LoginForm,CarsForm,VehiclesForm,ContactForm,AddToCartForm,CheckoutForm
+from .forms import UserForm,LoginForm,CarsForm,VehiclesForm,ContactForm,AddToBookingForm,CheckoutForm
 from ..models import Users,Vehicles,Cars,Booking
 from flask import Flask, render_template,flash,request,redirect,url_for,session,current_app
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -16,8 +16,8 @@ def index():
 
 @main.route('/menu_base')
 def menu_base():
-    products = Vehicles.query.all()
-    return render_template("menu_base.html",products=products)
+    vehicles = Vehicles.query.all()
+    return render_template("menu_base.html",vehicles=vehicles)
 
 @main.route('/user/<name>')
 def user(name):
@@ -79,10 +79,10 @@ def logout():
 @main.route('/add-item', methods = ['POST','GET'])
 @login_required
 def add_item():
-    form = ItemsForm(request.form)
+    form = CarsForm(request.form)
     if form.validate_on_submit():
-        item = Items(name=form.name.data, size = form.size.data, price = form.price.data)
-        db.session.add(item)
+        cart = Cars(name=form.name.data, size = form.size.data, price = form.price.data)
+        db.session.add()
         db.session.commit()
         flash("Item added successfully")
         return redirect(url_for('main.add_item'))
@@ -91,52 +91,52 @@ def add_item():
         
         
    
-@main.route('/items')
+@main.route('/cars')
 @login_required
-def view_items():
-    items = Items.query.order_by(Items.id)
-    return render_template("items.html",items=items)
+def view_cars():
+    cars = Cars.query.order_by(Cars.id)
+    return render_template("cars.html",cars=cars)
 
 @main.route('/item/<int:id>')
 @login_required
 def item_zoom(id):
-    form = ItemsForm()
-    item = Items.query.get_or_404(id)
+    form = CarsForm()
+    item = Cars.query.get_or_404(id)
     return render_template('item.html', item=item,form=form)
 
 
 @main.route('/item/delete/<int:id>')
 @login_required
 def delete_item(id):
-    item_to_delete = Items.query.get_or_404(id)
+    item_to_delete = Cars.query.get_or_404(id)
     id = current_user.id
     if id == 1:
         try:
             db.session.delete(item_to_delete)
             db.session.commit()
             flash("Item was deleted")
-            items = Items.query.order_by(Items.date_posted)
-            return render_template("items.html",items=items)
+            cars = Cars.query.order_by(Cars.date_posted)
+            return render_template("cars.html",cars=cars)
 
         
         
         except:
             flash("There was a problem deleting item..try again")
-            items = Items.query.order_by(Items.id)
-            return render_template("items.html",items=items)
+            cars = Cars.query.order_by(Cars.id)
+            return render_template("cars.html",cars=cars)
 
     else:
          flash("Unauthorized Access")
-         items = Items.query.order_by(Items.date_posted)
-         return render_template("items.html",items=items)
+         cars = Cars.query.order_by(Cars.date_posted)
+         return render_template("cars.html",cars=cars)
 
 
 
 @main.route('/item/edit/<int:id>', methods = ["GET","POST"])
 @login_required
 def edit_item(id):
-    item = Items.query.get_or_404(id)
-    form = ItemsForm()
+    item = Cars.query.get_or_404(id)
+    form = CarsForm()
     if form.validate_on_submit():
         item.name = form.name.data
        # post.author = form.author.data
@@ -156,8 +156,8 @@ def edit_item(id):
 
     else:
         flash("Unauthorized Access")
-        items = Items.query.order_by(Items.date_posted)
-        return render_template("items.html",items=items)
+        cars = Cars.query.order_by(Cars.date_posted)
+        return render_template("cars.html",cars=cars)
 
 
 
@@ -171,7 +171,7 @@ def add_user():
         if user is None:
             # Hash password first
             hash_pw = generate_password_hash(form.password_hash.data, "sha256")
-            user = Users(name=form.name.data,email=form.email.data,password_hash=hash_pw)
+            user = Users(name=form.name.data,email=form.email.data,phone=form.phone.data,password_hash=hash_pw)
             db.session.add(user)
             db.session.commit()
         name = form.name.data
@@ -234,44 +234,44 @@ def delete(id):
 @main.route('/menu')
 @login_required
 def menu():
-    products = Products.query.all()
-    return render_template('menu.html', products=products)
+    vehicles = Vehicles.query.all()
+    return render_template('menu.html', vehicles=vehicles)
 
 
 @main.route('/menu/<string:category>', methods=['GET','POST'])
 @login_required
 def menu_category(category):
-    items = Items.query.filter_by(category=category).all()
+    cars = Cars.query.filter_by(category=category).all()
     cart = [] 
     if request.method == 'POST':
         # get the item name and size from the request form
         item_name = request.form.get('item_name')
         item_size = request.form.get('item_size')
 
-        # find the item in the list of items
-        for item in items:
+        # find the item in the list of cars
+        for item in cars:
             if item.name == item_name and item.size == item_size:
                 # add the item to the cart
                 cart = request.form.get('cart', [])
                 cart.append(item)
 
         # render the template with the updated cart
-        return render_template('menu_category.html', items=items, cart=cart)
+        return render_template('menu_category.html', cars=cars, cart=cart)
 
 
-    return render_template("menu_category.html", items=items,cart=cart)
+    return render_template("menu_category.html", cars=cars,cart=cart)
 
 @main.route('/menu_base/<string:category>', methods=['GET','POST'])
 def menu_category_base(category):
-    items = Items.query.filter_by(category=category).all()
-    return render_template("menu_category_base.html", items=items)
+    cars = Cars.query.filter_by(category=category).all()
+    return render_template("menu_category_base.html", cars=cars)
     
 
 @main.route('/add_to_cart/<int:id>', methods=['GET', 'POST'])
 def add_to_cart(id):
-    form = AddToCartForm()
-    item = Items.query.get(id)
-    items = Items.query.all()
+    form = AddToBookingForm()
+    item = Cars.query.get(id)
+    cars = Cars.query.all()
     form.name.choices = [item.name]
     
     if form.validate_on_submit():
@@ -280,45 +280,45 @@ def add_to_cart(id):
         quantity = form.quantity.data
 
         # Check if the item is already in the cart
-        existing_item = Cart.query.filter_by(item_id=item_id, user_id=current_user.id).first()
+        existing_item = Booking.query.filter_by(item_id=item_id, user_id=current_user.id).first()
 
         # If the item is already in the cart, update the quantity
         if existing_item:
             existing_item.quantity += quantity
         # If the item is not in the cart, add it as a new entry
         else:
-            new_item = Cart(user_id=current_user.id, item_id=item_id, quantity=quantity)
+            new_item = Booking(user_id=current_user.id, item_id=item_id, quantity=quantity)
             db.session.add(new_item)
         db.session.commit()
         return redirect(url_for('main.view_cart'))
-    return render_template('add_to_cart.html', form=form, items=items, item = item)
+    return render_template('add_to_cart.html', form=form, cars=cars, item = item)
 
 
-def calculate_total(cart_items, total):
-        # Iterate over the items in the cart and calculate the total
-        for item in cart_items:
-            item_obj = Items.query.filter_by(id=item.item_id).first()
+def calculate_total(cart_cars, total):
+        # Iterate over the cars in the cart and calculate the total
+        for item in cart_cars:
+            item_obj = Cars.query.filter_by(id=item.item_id).first()
             if item_obj:
                 total += item_obj.price * item.quantity
             else:
-                print(f"Item with id {item.item_id} not found in Items table")
+                print(f"Item with id {item.item_id} not found in Cars table")
             
         return total
 
 
 @main.route('/cart')
 def view_cart():
-    # Get all the items in the cart for the current user
-    cart_items = Cart.query.filter_by(user_id=current_user.id).all()
+    # Get all the cars in the cart for the current user
+    cart_cars = Booking.query.filter_by(user_id=current_user.id).all()
     total = 0
 
-    total = calculate_total(cart_items, total=total)
+    total = calculate_total(cart_cars, total=total)
 
     # Create a list of dictionaries that contain the name, price, and total
     # for each item in the cart
-    cart_items_with_attributes = []
-    for item in cart_items:
-        item_obj = Items.query.filter_by(id=item.item_id).first()
+    cart_cars_with_attributes = []
+    for item in cart_cars:
+        item_obj = Cars.query.filter_by(id=item.item_id).first()
         if item_obj:
             item_dict = {
                 'name': item_obj.name,
@@ -326,18 +326,18 @@ def view_cart():
                 'quantity': item.quantity,
                 'total':  item.quantity * item_obj.price
             }
-            cart_items_with_attributes.append(item_dict)
+            cart_cars_with_attributes.append(item_dict)
 
-    return render_template('cart.html', cart=cart_items_with_attributes, total=total, active_nav='cart')
+    return render_template('cart.html', cart=cart_cars_with_attributes, total=total, active_nav='cart')
 
 
 @main.route('/clear-cart')
 def clear_cart():
-  # Get all the items in the cart for the current user
-  cart_items = Cart.query.filter_by(user_id=current_user.id).all()
+  # Get all the cars in the cart for the current user
+  cart_cars = Booking.query.filter_by(user_id=current_user.id).all()
   
-  # Delete all the items in the cart
-  for item in cart_items:
+  # Delete all the cars in the cart
+  for item in cart_cars:
     db.session.delete(item)
   db.session.commit()
   
@@ -348,9 +348,9 @@ def clear_cart():
 
 @main.route("/checkout", methods=['GET','POST'])
 def checkout():
-    cart_items = Cart.query.filter_by(user_id=current_user.id).all()
+    cart_cars = Booking.query.filter_by(user_id=current_user.id).all()
     total = 0
-    total = calculate_total(cart_items, total=total)
+    total = calculate_total(cart_cars, total=total)
     form = CheckoutForm()
 
     if form.validate_on_submit():

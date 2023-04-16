@@ -63,8 +63,8 @@ class Booking(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     car_id = db.Column(db.Integer, db.ForeignKey('cars.price'))
     car_price = db.Column(db.Integer)
-    pickup_date = db.Column(db.DateTime, default=datetime.utcnow)
-    return_date = db.Column(db.DateTime, default=datetime.utcnow)
+    pickup_date = db.Column(db.DateTime)
+    return_date = db.Column(db.DateTime)
 
     def __init__(self, user_id, car_id, duration):
         self.user_id = user_id

@@ -6,7 +6,7 @@ from app.admin import admin
 from app.models import Vehicles,Users,Cars
 from app import db
 from flask_wtf import FlaskForm
-from wtforms import Form,StringField,SubmitField,PasswordField,ValidationError
+from wtforms import Form,StringField,IntegerField,SubmitField,PasswordField,ValidationError
 from wtforms.validators import DataRequired,EqualTo,Length
 from wtforms.widgets import TextArea
 
@@ -22,6 +22,7 @@ class CarsForm(FlaskForm):
 class UserForm(FlaskForm):
     name = StringField("Name : ", validators=[DataRequired()])
     email = StringField("Email : ", validators=[DataRequired()])
+    phone = IntegerField("phone : ", validators=[DataRequired()])
     submit = SubmitField("Submit")
     password_hash = PasswordField("Password : ", validators=[DataRequired(),EqualTo('password_hash_v',message="Passwords must match!")])
     password_hash_v = PasswordField("Confirm Password : ", validators=[DataRequired()])
@@ -41,9 +42,9 @@ def index():
 @admin.route('/add-item', methods = ['POST','GET'])
 @login_required
 def add_item():
-    form = ItemsForm(request.form)
+    form = CarsForm(request.form)
     if form.validate_on_submit():
-        item = Items(name=form.name.data, size = form.size.data, price = form.price.data, category=form.category.data)
+        item = Cars(name=form.name.data, description=form.description.data, price=form.price.data, category=form.category.data)
         db.session.add(item)
         db.session.commit()
         flash("Item added successfully")
@@ -56,39 +57,39 @@ def add_item():
 @admin.route('/items')
 @login_required
 def view_items():
-    items = Items.query.order_by(Items.id)
-    return render_template("admin/items.html",items=items)
+    cars = Cars.query.order_by(Cars.id)
+    return render_template("admin/items.html",cars=cars)
 
 @admin.route('/item/<int:id>')
 @login_required
 def item_zoom(id):
-    item = Items.query.get_or_404(id)
-    return render_template('admin/item.html', item=item)
+    car = Cars.query.get_or_404(id)
+    return render_template('admin/item.html', car=car)
 
 
 @admin.route('/item/delete/<int:id>')
 @login_required
 def delete_item(id):
-    item_to_delete = Items.query.get_or_404(id)
+    item_to_delete = Cars.query.get_or_404(id)
     id = current_user.id
     if id == 1:
         try:
             db.session.delete(item_to_delete)
             db.session.commit()
             flash("Item was deleted")
-            items = Items.query.order_by(Items.date_posted)
+            items = Cars.query.order_by(Cars.date_posted)
             return render_template("admin/items.html",items=items)
 
         
         
         except:
             flash("There was a problem deleting item..try again")
-            items = Items.query.order_by(Items.id)
+            items = Cars.query.order_by(Cars.id)
             return render_template("admin/items.html",items=items)
 
     else:
          flash("Unauthorized Access")
-         items = Items.query.order_by(Items.date_posted)
+         items = Cars.query.order_by(Cars.date_posted)
          return render_template("admin/items.html",items=items)
 
 
@@ -96,30 +97,30 @@ def delete_item(id):
 @admin.route('/item/edit/<int:id>', methods = ["GET","POST"])
 @login_required
 def edit_item(id):
-    item = Items.query.get_or_404(id)
-    form = ItemsForm()
+    car = Cars.query.get_or_404(id)
+    form = CarsForm()
     if form.validate_on_submit():
-        item.name = form.name.data
+        car.name = form.name.data
        # post.author = form.author.data
-        item.size = form.size.data
-        item.price = form.price.data
-        item.category = form.category.data
+        car.description = form.description.data
+        car.price = form.price.data
+        car.category = form.category.data
         #db.session.add(item)
         db.session.commit()
-        flash("Item has been updated!")
-        return redirect(url_for('admin.edit_item',id=item.id))
+        flash("Car has been updated!")
+        return redirect(url_for('admin.edit_item',id=car.id))
     
     if current_user.id == 1:
-        form.name.data = item.name
+        form.name.data = car.name
     # form.author.data = post.author
-        form.size.data = item.size
-        form.price.data = item.price
+        form.description.data = car.description
+        form.price.data = car.price
         return render_template('admin/edit_item.html', form=form)
 
     else:
         flash("Unauthorized Access")
-        items = Items.query.order_by(Items.date_posted)
-        return render_template("admin/items.html",items=items)
+        cars = Cars.query.order_by(Cars.date_posted)
+        return render_template("admin/items.html",cars=cars)
 
 
 
@@ -149,10 +150,10 @@ def add_user():
 @admin.route('/add-product', methods = ['POST','GET'])
 @login_required
 def add_product():
-    form = ProductsForm(request.form)
+    form = VehiclesForm(request.form)
     if form.validate_on_submit():
-        product = Products(name=form.name.data, category=form.category.data, description=form.description.data)
-        db.session.add(product)
+        vehicle = Vehicles(name=form.name.data, category=form.category.data, description=form.description.data)
+        db.session.add(vehicle)
         db.session.commit()
         flash("Product added successfully")
         return redirect(url_for('admin.add_product'))
@@ -163,14 +164,14 @@ def add_product():
 @admin.route('/products')
 @login_required
 def view_products():
-    products = Products.query.order_by(Products.id)
+    products = Vehicles.query.order_by(Vehicles.id)
     return render_template("admin/products.html",products=products)        
 
 @admin.route('/product/edit/<int:id>', methods = ["GET","POST"])
 @login_required
 def edit_product(id):
-    product = Products.query.get_or_404(id)
-    form = ProductsForm()
+    product = Vehicles.query.get_or_404(id)
+    form = VehiclesForm()
     if form.validate_on_submit():
         product.name = form.name.data
        # post.author = form.author.data
@@ -191,31 +192,31 @@ def edit_product(id):
 
     else:
         flash("Unauthorized Access")
-        product = Products.query.order_by(Products.id)
+        product = Vehicles.query.order_by(Vehicles.id)
         return render_template("admin/products.html",product=product)
 
 @admin.route('/product/delete/<int:id>')
 @login_required
 def delete_product(id):
-    product_to_delete = Products.query.get_or_404(id)
+    product_to_delete = Vehicles.query.get_or_404(id)
     id = current_user.id
     if id == 1:
         try:
             db.session.delete(product_to_delete)
             db.session.commit()
             flash("Product was deleted")
-            products = Products.query.order_by(Products.id)
+            products = Vehicles.query.order_by(Vehicles.id)
             return render_template("admin/products.html",products=products)
 
         
         
         except:
             flash("There was a problem deleting item..try again")
-            products = Products.query.order_by(Products.id)
+            products = Vehicles.query.order_by(Vehicles.id)
             return render_template("admin/products.html",products=products)
 
     else:
          flash("Unauthorized Access")
-         products = Products.query.order_by(Products.id)
+         products = Vehicles.query.order_by(Vehicles.id)
          return render_template("admin/products.html",products=products)
 

@@ -1,7 +1,7 @@
 from .. import main
 from flask import Flask, render_template,flash,request,redirect,url_for
 from flask_wtf import FlaskForm
-from wtforms import Form,StringField,SubmitField,PasswordField,SelectField,IntegerField,TextAreaField
+from wtforms import Form,StringField,SubmitField,PasswordField,SelectField,IntegerField,TextAreaField,DateTimeField
 from wtforms.validators import DataRequired,EqualTo,Length
 from wtforms.widgets import TextArea
 
@@ -33,10 +33,19 @@ class CarsForm(FlaskForm):
 
 
 class BookForm(FlaskForm):
-    name = StringField("Item Name", validators=[DataRequired()])
+    name = StringField("Car Name", validators=[DataRequired()])
     quantity = StringField("Quantity", validators=[DataRequired()])
-    pickup_date = StringField("Pick-up", validators=[DataRequired()])
-    return_date = StringField("Return", validators=[DataRequired()])
+    pickup_date = DateTimeField('Pick-up Date',
+                                format='%Y-%m-%d %H:%M:%S',
+                                validators=[DataRequired()],
+                                description='Select a date and time',
+                                render_kw={'placeholder': 'YYYY-MM-DD HH:MM:SS'})
+    
+    return_date = DateTimeField('Return Date',
+                                format='%Y-%m-%d %H:%M:%S',
+                                validators=[DataRequired()],
+                                description='Select a date and time',
+                                render_kw={'placeholder': 'YYYY-MM-DD HH:MM:SS'})
     submit = SubmitField()
 
 
@@ -46,7 +55,7 @@ class VehiclesForm(FlaskForm):
     description = StringField("Description", validators=[DataRequired()])
     submit = SubmitField()
 
-class AddToCartForm(FlaskForm):
+class AddToBookingForm(FlaskForm):
     name = SelectField('Item Name', choices=[], default='')
     quantity = IntegerField('Quantity', validators=[DataRequired()])
     submit = SubmitField('Add to Cart')
