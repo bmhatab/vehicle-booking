@@ -65,6 +65,7 @@ class Booking(db.Model):
     car_price = db.Column(db.Integer)
     pickup_date = db.Column(db.DateTime)
     return_date = db.Column(db.DateTime)
+    duration = db.Column(db.Integer)
 
     def __init__(self, user_id, car_id, duration):
         self.user_id = user_id

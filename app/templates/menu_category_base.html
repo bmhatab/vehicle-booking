@@ -18,7 +18,7 @@
         <div class="category-name">{{item.name}}</div>
         <div class="category-description">{{item.category}}<p>{{item.description}}</br>{{item.price}}</p></div>
      </br>
-     <a class="view-menu-btn" href="{{ url_for('main.menu_category_base', category=item.category) }}">View Items</a>  
+     <a class="view-menu-btn" href="{{ url_for('main.add_to_cart', id =item.id) }}">View Items</a>  
     </div>
     
    

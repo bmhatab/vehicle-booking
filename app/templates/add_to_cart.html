@@ -1,43 +1,39 @@
-{% extends 'homepage.html' %}
+{% extends 'base_home.html' %}
 
-{% block title %} Add to Cart {% endblock %}
-
+{% block title %} Book Car {% endblock %}
 
 {% block main %}
-<div class="container">
 
 <!--This loops through the flash message -->
     {% for message in get_flashed_messages() %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                {{message}}
+            {{message}}
             <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endfor %}
+    <br/>
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <form method="POST" action="{{ url_for('main.add_to_cart',id = item.id) }}">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                <label for="{{ form.name.id }}">{{ form.name.label.text }}</label>
+                {{ form.name(class="form-control", id=form.name.id) }}
+            </div>
+            <!-- Update form.pickup_date field -->
+            <div class="form-group">
+                <label for="{{ form.pickup_date.id }}">{{ form.pickup_date.label.text }}</label>
+                {{ form.pickup_date(class="form-control datepicker", id=form.pickup_date.id, **{"data-provide": "datepicker"}) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.return_date.id }}">{{ form.return_date.label.text }}</label>
+                {{ form.return_date(class="form-control datepicker", id=form.return_date.id, **{"data-provide": "datepicker"}) }}
+            </div>
+            
 
-        <h1>Add Item </h1> 
-        <br/>
-        <div class="shadow p-3 mb-5 bg-body rounded">
-            <form method="POST" action="{{ url_for('main.add_to_cart',id = item.id) }}">
-                {{ form.csrf_token }}
-                {{ form.name.label(class="form-label") }}{{ form.name(class="form-control",value=item.name) }}
-                {{ form.quantity.label(class="form-label") }} {{ form.quantity(class="form-control",value=1) }}
-                {{ form.submit(class="btn btn-primary") }}
-            </form>
-        </div>
+            {{ form.submit(class="btn btn-primary") }}
+        </form>
     </div>
-
-   
-
-
-    
-    
-            
-            
-            
-        
-
 </div>
-
-
 
 {% endblock %}
