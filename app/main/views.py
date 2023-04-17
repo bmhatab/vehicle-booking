@@ -265,51 +265,42 @@ def menu_category(category):
 def menu_category_base(category):
     cars = Cars.query.filter_by(category=category).all()
     return render_template("menu_category_base.html", cars=cars)
+
+def get_duration_in_days(pickup_date_str, return_date_str):
+    pickup_date = datetime.strptime(pickup_date_str, '%Y-%m-%d')
+    return_date = datetime.strptime(return_date_str, '%Y-%m-%d')
+    duration_in_days = (return_date - pickup_date).days
+    return duration_in_days
     
 
 @main.route('/add_to_cart/<int:id>', methods=['GET', 'POST'])
 def add_to_cart(id):
-    form = BookForm()  # Update to use the BookForm
+    form = BookForm()
     item = Cars.query.get(id)
     cars = Cars.query.all()
-    form.name.data = item.name  # Update to set the default value for name field
+    form.name.data = item.name
 
-    if form.validate_on_submit():
-        # Retrieve form data
+    if request.method == 'POST':
         user_id = current_user.id
         car_id = item.id
         car_price = item.price
-        pickup_date = form.pickup_date.data
-        return_date = form.return_date.data
-       
-
-        # Check if the car is already booked by the user
+        pickup_date = request.form.get('pickup_date')
+        return_date = request.form.get('return_date')
+        duration = get_duration_in_days(pickup_date_str = pickup_date , return_date_str = return_date)
         existing_booking = Booking.query.filter_by(user_id=user_id, car_id=car_id).first()
 
-        # If the car is already booked by the user, update the booking details
         if existing_booking:
             existing_booking.pickup_date = pickup_date
             existing_booking.return_date = return_date
-        # If the car is not booked by the user, create a new booking entry
+            existing_booking.duration = duration  # Update duration in existing booking
+
         else:
-            new_booking = Booking(user_id=user_id, car_id=car_id, car_price=car_price, pickup_date=pickup_date, return_date=return_date, duration=duration)
+            new_booking = Booking(pickup_date, return_date, duration, booking_id=user_id)
             db.session.add(new_booking)
-        db.session.commit()
-        return redirect(url_for('main.cart'))
+            db.session.commit()
+            print("done")
+        return redirect(url_for('main.view_cart'))
     return render_template('add_to_cart.html', form=form, cars=cars, item=item)
-
-
-
-def calculate_total(cart_cars, total):
-        # Iterate over the cars in the cart and calculate the total
-        for item in cart_cars:
-            item_obj = Cars.query.filter_by(id=item.item_id).first()
-            if item_obj:
-                total += item_obj.price * item.quantity
-            else:
-                print(f"Item with id {item.item_id} not found in Cars table")
-            
-        return total
 
 
 from datetime import datetime
@@ -320,8 +311,6 @@ def view_cart():
     cart_bookings = Booking.query.filter_by(user_id=current_user.id).all()
     total = 0
 
-    total = calculate_total(cart_bookings, total=total)
-
     # Create a list of dictionaries that contain the name, price, and total
     # for each item in the cart
     cart_bookings_with_attributes = []
@@ -331,11 +320,10 @@ def view_cart():
             booking_dict = {
                 'name': car.name,
                 'price': car.price,
-                'quantity': booking.quantity,
                 'pickup_date': booking.pickup_date,
                 'return_date': booking.return_date,
-                'duration': (booking.return_date - booking.pickup_date).days,  # Calculate duration in days
-                'total':  booking.quantity * car.price
+                'duration': booking.duration,  # Calculate duration in days
+                'total':  booking.duration * car.price
             }
             cart_bookings_with_attributes.append(booking_dict)
 

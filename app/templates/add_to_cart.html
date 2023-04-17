@@ -11,29 +11,21 @@
             <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endfor %}
-    <br/>
-    <div class="shadow p-3 mb-5 bg-body rounded">
-        <form method="POST" action="{{ url_for('main.add_to_cart',id = item.id) }}">
-            {{ form.csrf_token }}
-            <div class="form-group">
-                <label for="{{ form.name.id }}">{{ form.name.label.text }}</label>
-                {{ form.name(class="form-control", id=form.name.id) }}
-            </div>
-            <!-- Update form.pickup_date field -->
-            <div class="form-group">
-                <label for="{{ form.pickup_date.id }}">{{ form.pickup_date.label.text }}</label>
-                {{ form.pickup_date(class="form-control datepicker", id=form.pickup_date.id, **{"data-provide": "datepicker"}) }}
-            </div>
-            
-            <div class="form-group">
-                <label for="{{ form.return_date.id }}">{{ form.return_date.label.text }}</label>
-                {{ form.return_date(class="form-control datepicker", id=form.return_date.id, **{"data-provide": "datepicker"}) }}
-            </div>
-            
 
-            {{ form.submit(class="btn btn-primary") }}
+    <div class="shadow p-3 mb-5 bg-body rounded" style="flex:4;">
+        <form method="post" >
+            {{form.hidden_tag()}} <!--This creates our csrf token -->
+            {{form.name.label(class="form-label")}}
+            {{form.name(class="form-control")}}
+            {{ form.pickup_date.label(class="form-label")}}
+            {{ form.pickup_date(class="form-control datepicker")}}
+            {{ form.return_date.label(class="form-label")}}
+            {{form.return_date(class="form-control datepicker")}}
+            <br/>
+            {{form.submit(class="btn btn-primary")}} 
         </form>
-    </div>
-</div>
+    </div>    
+
+
 
 {% endblock %}

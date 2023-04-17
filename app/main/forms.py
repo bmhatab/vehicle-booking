@@ -35,16 +35,16 @@ class CarsForm(FlaskForm):
 class BookForm(FlaskForm):
     name = StringField("Car Name", validators=[DataRequired()])
     pickup_date = DateTimeField('Pick-up Date',
-                                format='%Y-%m-%d %H',
+                                format='%Y-%m-%d',
                                 validators=[DataRequired()],
                                 description='Select a date and time',
-                                render_kw={'placeholder': 'YYYY-MM-DD HH'})
+                                render_kw={'placeholder': 'YYYY-MM-DD'})
     
     return_date = DateTimeField('Return Date',
-                                format='%Y-%m-%d %H',
+                                format='%Y-%m-%d',
                                 validators=[DataRequired()],
                                 description='Select a date and time',
-                                render_kw={'placeholder': 'YYYY-MM-DD HH'})
+                                render_kw={'placeholder': 'YYYY-MM-DD'})
     submit = SubmitField()
 
 

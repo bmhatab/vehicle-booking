@@ -61,10 +61,10 @@ class Vehicles(db.Model):
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    car_id = db.Column(db.Integer, db.ForeignKey('cars.price'))
-    car_price = db.Column(db.Integer)
-    pickup_date = db.Column(db.DateTime)
-    return_date = db.Column(db.DateTime)
+    car_id = db.Column(db.Integer, db.ForeignKey('cars.id'))
+    car_price = db.Column(db.Integer, db.ForeignKey('cars.price'))
+    pickup_date = db.Column(db.String)
+    return_date = db.Column(db.String)
     duration = db.Column(db.Integer)
 
     def __init__(self, user_id, car_id, duration):
