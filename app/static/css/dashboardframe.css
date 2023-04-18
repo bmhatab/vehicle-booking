@@ -20,6 +20,7 @@
   position: absolute;
   border-color: transparent;
   border-radius: 20px;
+  z-index: -1;
 }
 .dashboardframe-hero {
   top: 112px;
@@ -28,7 +29,21 @@
   height: 248px;
   position: absolute;
   border-color: transparent;
+  opacity: 50%;
+  
 }
+
+.dashboardframe-herodash {
+  top: 112px;
+  left: 15px;
+  width: 1300px;
+  height: 248px;
+  position: absolute;
+  border-color: transparent;
+}
+
+
+
 .dashboardframe-hero1 {
   top: 368px;
   left: 15px;
@@ -36,7 +51,18 @@
   height: 288px;
   position: absolute;
   border-color: transparent;
+  z-index: -1;
 }
+
+.dashboardframe-hero1edit {
+  top: 368px;
+  left: 15px;
+  width: 1300px;
+  height: 288px;
+  position: absolute;
+  border-color: transparent;
+}
+
 .dashboardframe-workframe {
   top: 664px;
   left: 17px;
