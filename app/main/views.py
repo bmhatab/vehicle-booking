@@ -73,8 +73,8 @@ def login():
 @main.route('/dashboard', methods=["GET","POST"])
 @login_required
 def dashboard():
-    cars = Cars.query.all()
-    return render_template("dashboard.html", active_nav='dashboard', cars=cars)
+    vehicles = Vehicles.query.all()
+    return render_template("dashboard.html", active_nav='dashboard', vehicles=vehicles)
 
 @main.route('/logout', methods=["GET","POST"])
 @login_required

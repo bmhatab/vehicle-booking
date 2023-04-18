@@ -16,7 +16,7 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{{url_for('main.index')}}">Farosmel Pizza</a>
+      <a class="navbar-brand" href="{{url_for('main.index')}}">UPSA Car Booking</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -26,16 +26,13 @@
             <a class="nav-link" href="{{url_for('main.index')}}">Home</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="{{url_for('main.dashboard')}}">Dashboard</a>
+            <a class="nav-link" href="{{url_for('main.menu_base')}}">Vehicles</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('main.menu')}}">Pizza Menu</a>
+            <a class="nav-link" href="{{url_for('main.dashboard')}}">Book Vehicle</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{url_for('main.about')}}">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{url_for('main.contact')}}">Contact</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{url_for('main.terms')}}">Terms & Conditions</a>
@@ -102,7 +99,7 @@
     
   <div id="footer">
       <footer>
-        <p>Copyright © {{ 2023 }} Farosmel Pizza</p>
+        <p>Copyright © {{ 2023 }} UPSA</p>
       </footer>
   </div>
 

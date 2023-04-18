@@ -1,4 +1,4 @@
-{% extends 'base_home.html' %}
+{% extends 'base_view.html' %}
 
 {% block title %} Menu Items {% endblock %}
 
@@ -13,16 +13,18 @@
         </div>
     {% endfor %}
 
-    {% for item in cars %}
-    <div class="menu-card">
-        <div class="category-name">{{item.name}}</div>
-        <div class="category-description">{{item.category}}<p>{{item.description}}</br>{{item.price}}</p></div>
-     </br>
-     <a class="view-menu-btn" href="{{ url_for('main.add_to_cart', id =item.id) }}">View Items</a>  
+    <div class="menu-card-container">
+        {% for item in cars %}
+        <div class="menu-card">
+            <div class="category-name">{{item.name}}</div>
+            <div class="category-description">{{item.category}}<p>{{item.description}}</br>{{item.price}}</p></div>
+            </br>
+            <a class="view-menu-btn" href="{{ url_for('main.add_to_cart', id =item.id) }}">View Items</a>  
+        </div>
+        {% if loop.index % 3 == 0 %}
+            <div style="flex-basis: 100%; height: 0;"></div>
+        {% endif %}
+        {% endfor %}
     </div>
-    
-   
-    {% endfor %}
-
 
 {% endblock %}

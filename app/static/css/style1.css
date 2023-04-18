@@ -5,28 +5,28 @@
  background-image: url("../assets/pizzapic.PNG");
 }
 
-.menu-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 400px;
-    height: 400px;
-    background-color: #fff;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: all 0.2s ease-in-out;
-    display: inline-flex; /* Make the menu cards appear side by side */
-    vertical-align: top; /* Align the menu cards to the top */
-  }
+.menu-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-  @media only screen and (max-width:700px) {
-    .menu-card {
-       margin-left:25%;
-      }
-  
-  }
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  height: 400px;
+  background-color: #fff;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex; /* Make the menu cards appear side by side */
+  vertical-align: top; /* Align the menu cards to the top */
+  margin: 10px; /* Add some margin between the cards */
+}
   
  
   .menu-card:hover {

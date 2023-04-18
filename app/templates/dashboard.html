@@ -13,14 +13,16 @@
     </div>
   {% endfor %}
 
-  {% for car in cars %}
-  <div class="menu-card">
-    <div class="category-name">{{ car.name }}</div>
-    <div class="category-description">{{ car.category }}<p>{{ car.description }}</br>{{ car.price }}</p></div>
-    </br>
-    <a class="view-menu-btn" href="{{ url_for('main.add_to_cart', id=car.id) }}">Book Car</a>
-  </div>
-  {% endfor %}
+  {% for vehicle in vehicles %}
+
+    <div class="menu-card">
+        <div class="category-name">{{vehicle.name}}</div>
+        <div class="category-description">{{vehicle.category}}<p>{{vehicle.description}}</p></div>
+     </br>
+     <a class="view-menu-btn" href="{{ url_for('main.menu_category_base', category=vehicle.category) }}">View Items</a>  
+    </div>
+    
+    {% endfor %}
 
 
 {% endblock %}
