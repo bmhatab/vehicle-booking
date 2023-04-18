@@ -23,10 +23,10 @@
   z-index: -1;
 }
 .dashboardframe-hero {
-  top: 112px;
+  top: 90px;
   left: 15px;
   width: 1300px;
-  height: 248px;
+  height: 200px;
   position: absolute;
   border-color: transparent;
   opacity: 50%;

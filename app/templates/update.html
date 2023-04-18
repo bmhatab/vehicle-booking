@@ -1,4 +1,4 @@
-{% extends 'homepage.html' %}
+{% extends 'base_dashboard.html' %}
 
 {% block title %} Update User {% endblock %}
 
@@ -16,11 +16,6 @@
             <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endfor %}
-
-
-        <h1>User Update </h1> 
-       
-        <br/>
         <div class="shadow p-3 mb-5 bg-body rounded">
             <form method="post">
                 {{form.hidden_tag()}} <!--This creates our csrf token -->
