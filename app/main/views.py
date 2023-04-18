@@ -14,6 +14,10 @@ from flask_login import UserMixin,login_user,LoginManager,login_required,logout_
 def index():
     return render_template("base_home.html")
 
+@main.route('/mobile')
+def mobile():
+    return render_template("base_mobile.html")
+
 @main.route('/menu_base')
 def menu_base():
     vehicles = Vehicles.query.all()
@@ -65,7 +69,8 @@ def login():
 @main.route('/dashboard', methods=["GET","POST"])
 @login_required
 def dashboard():
-    return render_template("dashboard.html", active_nav='dashboard')
+    cars = Cars.query.all()
+    return render_template("dashboard.html", active_nav='dashboard', cars=cars)
 
 @main.route('/logout', methods=["GET","POST"])
 @login_required

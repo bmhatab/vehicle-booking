@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="english">
   <head>
-    <title>{% block title %} Book Vehicle {% endblock %}</title>
+    <title>exported project</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <meta property="twitter:card" content="summary_large_image" />
@@ -34,10 +34,15 @@
     />
     <link
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
       data-tag="font"
     />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style3.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Bootstrap CSS -->
@@ -49,14 +54,13 @@
     <!-- Include Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
-
   </head>
   <body>
     <div>
-      <link href="{{ url_for('static', filename='css/dashboardframe.css') }}" rel="stylesheet" />
+      <link href="{{ url_for('static', filename='css/mainframephone.css') }}" rel="stylesheet" />
 
-      <div class="dashboardframe-container">
-        <div class="dashboardframe-dashboardframe">
+      <div class="mainframephone-container">
+        <div class="mainframephone-mainframephone">
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="{{url_for('main.index')}}">Zeus Speed</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,178 +96,126 @@
                 </a>
               </div>
           </nav>
-
           <img
-            src="/static/assets/public/playground_assets/navhead2335-cbhl-200h.png"
-            alt="navhead2335"
-            class="dashboardframe-navhead"
+            src="/static/assets/public1/playground_assets/navhead2866-3jnm-200h.png"
+            alt="navhead2866"
+            class="mainframephone-navhead"
           />
-
-          <div class="dashboardframe-herodash">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-2">
-                  <!-- Sidebar -->
-                  <ul class="nav flex-column nav-pills">
-                    <li class="nav-item">
-                      {% if active_nav == 'dashboard' %} 
-                      <a class="nav-link active" href="{{url_for('main.dashboard')}}">Profile</a>
-                      {% else %}
-                      <a class="nav-link" href="{{url_for('main.dashboard')}}">Profile</a>
-                      {% endif %}
-                    </li>
-                    <li class="nav-item">
-                      {% if active_nav == 'cart' %} 
-                      <a class="nav-link active" href="{{url_for('main.view_cart')}}">Cart</a>
-                      {% else %}
-                      <a class="nav-link" href="{{url_for('main.view_cart')}}">Cart</a>
-                      {% endif %}
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Order history</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Post comment</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+          <img
+            src="/static/assets/public1/playground_assets/hero2866-03q-400h.png"
+            alt="hero2866"
+            class="mainframephone-hero"
+          />
+          <div class="mainframephone-bookbutton">
+            <div class="mainframephone-buttontext">
+              <span class="mainframephone-text"><span>View All</span></span>
             </div>
           </div>
-          <img
-            src="/static/assets/public/playground_assets/hero2336-x7is-300h.png"
-            alt="hero2336"
-            class="dashboardframe-hero"
-          />
-
-          <div class="dashboardframe-hero1edit">
-            <p>You are logged in!</p>
-            <strong>Name: </strong>{{current_user.name}}</br>
-            <strong>User ID: </strong>{{current_user.id}}</br>
-            <strong>Email: </strong>{{current_user.email}}</br>
-            <strong>Date Joined: </strong>{{current_user.date_added}}</br></br>           
-            <a class="btn btn-outline-secondary" href="{{url_for('main.update',id =current_user.id)}}">Edit Profile</a>
-          </div>
-
-          <img
-            src="/static/assets/public/playground_assets/hero2321-yelk-300h.png"
-            alt="hero2321"
-            class="dashboardframe-hero1"
-          />
-          <div class="dashboardframe-workframe">
-      {% block main %}
-
-      
-      {% endblock %}
-            <img
-              src="/static/assets/public/playground_assets/workframe2312-o0m6-600h.png"
-              alt="workframe2312"
-              class="dashboardframe-workframe1"
-            />
+          <div class="mainframephone-headerad">
+            <span class="mainframephone-text02">
+              <span>Book a vehicle at vehicle today.</span>
+            </span>
+            <span class="mainframephone-text04">
+              <span>
+                We offer premium car booking services at affordable rates.
+                Browse our gallery to see vehicles available and book a vehicle
+                today!
+              </span>
+            </span>
           </div>
           <img
-            src="/static/assets/public/playground_assets/footerframe2316-9pm-500h.png"
-            alt="footerframe2316"
-            class="dashboardframe-footerframe"
+            src="/static/assets/public1/playground_assets/workframe2984-2bxt-400w.png"
+            alt="workframe2984"
+            class="mainframephone-workframe"
           />
-          <div class="dashboardframe-footerframe1">
-            <div class="dashboardframe-site-logo">
+          <div class="mainframephone-footerframe">
+            <div class="mainframephone-site-logo">
               <img
-                src="/static/assets/public/playground_assets/line3i231-2yjl.svg"
-                alt="Line3I231"
-                class="dashboardframe-line3"
+                src="/static/assets/public1/playground_assets/line3i287-nhbk.svg"
+                alt="Line3I287"
+                class="mainframephone-line3"
               />
               <img
-                src="/static/assets/public/playground_assets/line4i231-c64.svg"
-                alt="Line4I231"
-                class="dashboardframe-line4"
+                src="/static/assets/public1/playground_assets/line4i287-jsx.svg"
+                alt="Line4I287"
+                class="mainframephone-line4"
               />
               <img
-                src="/static/assets/public/playground_assets/line5i231-6xq7.svg"
-                alt="Line5I231"
-                class="dashboardframe-line5"
+                src="/static/assets/public1/playground_assets/line5i287-obts.svg"
+                alt="Line5I287"
+                class="mainframephone-line5"
               />
-              <span class="dashboardframe-text">
-                <span class="dashboardframe-text01">Site</span>
+              <span class="mainframephone-text06">
+                <span class="mainframephone-text07">Site</span>
                 <span>Logo</span>
               </span>
             </div>
-            <div class="dashboardframe-subscribe2">
+            <div class="mainframephone-subscribe2">
               <img
-                src="/static/assets/public/playground_assets/rectangle80i231-ol7-200h.png"
-                alt="Rectangle80I231"
-                class="dashboardframe-rectangle80"
+                src="/static/assets/public1/playground_assets/rectangle80i287-0b54-200h.png"
+                alt="Rectangle80I287"
+                class="mainframephone-rectangle80"
               />
-              <span class="dashboardframe-text03">
+              <span class="mainframephone-text09">
                 <span>Enter your email Address</span>
               </span>
-              <div class="dashboardframe-frame39">
-                <span class="dashboardframe-text05">
+              <div class="mainframephone-frame39">
+                <span class="mainframephone-text11">
                   <span>Get Started</span>
                 </span>
               </div>
             </div>
-            <div class="dashboardframe-menufooter2">
-              <span class="dashboardframe-text07"><span>About</span></span>
-              <span class="dashboardframe-text09"><span>Features</span></span>
-              <span class="dashboardframe-text11"><span>Pricing</span></span>
+            <div class="mainframephone-menufooter2">
+              <span class="mainframephone-text13"><span>About</span></span>
+              <span class="mainframephone-text15"><span>Features</span></span>
+              <span class="mainframephone-text17"><span>Pricing</span></span>
             </div>
-            <div class="dashboardframe-menufooter21">
-              <span class="dashboardframe-text13">
-                <span>
-                  <span>Gallery</span>
-                  <br />
-                  <span></span>
-                </span>
-              </span>
-              <span class="dashboardframe-text18"><span>Team</span></span>
-            </div>
-            <span class="dashboardframe-text20">
+            <span class="mainframephone-text19">
               <span>Let's do it!</span>
             </span>
-            <div class="dashboardframe-group12">
+            <div class="mainframephone-group12">
               <img
-                src="/static/assets/public/playground_assets/social2317-zxq8.svg"
-                alt="social2317"
-                class="dashboardframe-social"
+                src="/static/assets/public1/playground_assets/social2880-yy5.svg"
+                alt="social2880"
+                class="mainframephone-social"
               />
               <img
-                src="/static/assets/public/playground_assets/social2317-1as.svg"
-                alt="social2317"
-                class="dashboardframe-social1"
+                src="/static/assets/public1/playground_assets/social2880-q457.svg"
+                alt="social2880"
+                class="mainframephone-social1"
               />
               <img
-                src="/static/assets/public/playground_assets/social2317-qpdc.svg"
-                alt="social2317"
-                class="dashboardframe-social2"
+                src="/static/assets/public1/playground_assets/social2880-8pds.svg"
+                alt="social2880"
+                class="mainframephone-social2"
               />
               <img
-                src="/static/assets/public/playground_assets/social2317-6yq.svg"
-                alt="social2317"
-                class="dashboardframe-social3"
+                src="/static/assets/public1/playground_assets/social2880-inu.svg"
+                alt="social2880"
+                class="mainframephone-social3"
               />
-              <div class="dashboardframe-social4">
+              <div class="mainframephone-social4">
                 <img
-                  src="/static/assets/public/playground_assets/instagrami231-ki73.svg"
-                  alt="instagramI231"
-                  class="dashboardframe-instagram"
+                  src="/static/assets/public1/playground_assets/instagrami288-qlxb.svg"
+                  alt="instagramI288"
+                  class="mainframephone-instagram"
                 />
               </div>
               <img
-                src="/static/assets/public/playground_assets/social2317-cs9.svg"
-                alt="social2317"
-                class="dashboardframe-social5"
+                src="/static/assets/public1/playground_assets/social2880-xt3.svg"
+                alt="social2880"
+                class="mainframephone-social5"
               />
             </div>
             <img
-              src="/static/assets/public/playground_assets/shapes000022317-vl-300h.png"
-              alt="Shapes000022317"
-              class="dashboardframe-shapes00002"
+              src="/static/assets/public1/playground_assets/shapes000022880-6tu-200h.png"
+              alt="Shapes000022880"
+              class="mainframephone-shapes00002"
             />
-            <span class="dashboardframe-text22">
+            <span class="mainframephone-text21">
               <span>Start work today</span>
             </span>
-            <span class="dashboardframe-text24">
+            <span class="mainframephone-text23">
               <span>
                 High level experience in web design and development knowledge,
                 producing quality work.
@@ -273,6 +225,7 @@
         </div>
       </div>
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
