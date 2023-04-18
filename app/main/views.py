@@ -29,7 +29,11 @@ def user(name):
 
 @main.route('/about')
 def about():
-    return render_template("about.html")
+    form = ContactForm()
+    if form.validate_on_submit():
+        # handle form submission here
+        pass
+    return render_template("about.html", form=form)
 
 @main.route('/contact')
 def contact():
