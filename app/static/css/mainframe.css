@@ -154,7 +154,7 @@
   height: 504px;
   position: absolute;
   border-color: transparent;
-  max-width: 600px; /* Adjust max-width to fit your desired container width */
+  max-width: 1300px; /* Adjust max-width to fit your desired container width */
   margin: auto; /* Center the accordion within its container */
   flex: 1;
   padding: 0 10px;
