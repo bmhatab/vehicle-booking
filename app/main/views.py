@@ -286,13 +286,11 @@ def get_duration_in_days(pickup_date_str, return_date_str):
 def add_to_cart(id):
     form = BookForm()
     item = Cars.query.get(id)
-    cars = Cars.query.all()
     form.name.data = item.name
 
     if request.method == 'POST':
         user_id = current_user.id
         car_id = item.id
-        car_price = item.price
         pickup_date = request.form.get('pickup_date')
         return_date = request.form.get('return_date')
         duration = get_duration_in_days(pickup_date_str = pickup_date , return_date_str = return_date)
@@ -304,37 +302,39 @@ def add_to_cart(id):
             existing_booking.duration = duration  # Update duration in existing booking
 
         else:
-            new_booking = Booking(pickup_date, return_date, duration, booking_id=user_id)
+            new_booking = Booking(pickup_date, return_date, duration)
             db.session.add(new_booking)
             db.session.commit()
             print("done")
         return redirect(url_for('main.view_cart'))
-    return render_template('add_to_cart.html', form=form, cars=cars, item=item)
+    return render_template('add_to_cart.html', form=form, item=item)
 
 
-from datetime import datetime
-
-@main.route('/cart')
+@main.route('/cart', methods=['GET','POST'])
 def view_cart():
     # Get all the bookings in the cart for the current user
     cart_bookings = Booking.query.filter_by(user_id=current_user.id).all()
     total = 0
-
+    print('1')
     # Create a list of dictionaries that contain the name, price, and total
     # for each item in the cart
     cart_bookings_with_attributes = []
     for booking in cart_bookings:
+        print('2')
         car = Cars.query.filter_by(id=booking.car_id).first()
-        if car:
-            booking_dict = {
-                'name': car.name,
-                'price': car.price,
-                'pickup_date': booking.pickup_date,
-                'return_date': booking.return_date,
-                'duration': booking.duration,  # Calculate duration in days
-                'total':  booking.duration * car.price
-            }
-            cart_bookings_with_attributes.append(booking_dict)
+        print('1')
+        print('2')
+        booking_dict = {
+            'name': car.name,
+            'price': car.price,
+            'pickup_date': booking.pickup_date,
+            'return_date': booking.return_date,
+            'duration': booking.duration,  # Calculate duration in days
+            'total':  booking.duration * car.price
+        }
+        cart_bookings_with_attributes.append(booking_dict)
+        total += booking_dict['total']
+        print('3')
 
     return render_template('cart.html', cart=cart_bookings_with_attributes, total=total, active_nav='cart')
 
